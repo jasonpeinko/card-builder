@@ -29,15 +29,12 @@ const buildKeywordOptions = (keywords: CardKeyword[]) => {
 const CardDialog: React.FC<Props> = ({ colors, keywords, children, modal, onClose, onSave }) => {
   const { setValue, setValues, values, handleSubmit } = useForm<Card>(modal.data)
   useEffect(() => {
-    console.log('setting', modal.data)
     setValues(modal.data)
   }, [modal.data])
   const onSubmit = (values: Card) => {
-    console.log('submit', values)
     onSave(values)
   }
   const card = modal.data
-  console.log(values)
 
   return (<Dialog.Dialog open={modal.isOpen}>
     <Dialog.Header>

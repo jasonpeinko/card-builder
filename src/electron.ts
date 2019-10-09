@@ -1,5 +1,6 @@
 import electron from 'electron'
 import path from 'path'
+import isDev from 'electron-is-dev'
 
 const app = electron.app
 const BrowserWindow = electron.BrowserWindow
@@ -15,13 +16,18 @@ const createWindow = () => {
   // mainWindow.loadFile(
   //   path.join(__dirname, '/../public/index.html'),
   // )
-  mainWindow.loadURL('http://localhost:3333')
+  const url = isDev
+    ? 'http://localhost:3330'
+    : `file://${path.join(__dirname, '../build/index.html')}`
+  console.log(url)
+  mainWindow.loadURL(url)
   mainWindow.on('closed', () => {
     mainWindow = null
   })
 
-  mainWindow.webContents.openDevTools()
-  console.log('hi')
+  if (isDev) {
+    mainWindow.webContents.openDevTools()
+  }
 }
 
 app.on('ready', () => {

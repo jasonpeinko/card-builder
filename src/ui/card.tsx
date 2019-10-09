@@ -15,7 +15,6 @@ type CardProps = {
 const Card: React.FC<CardProps> = ({ modal, card }) => {
   const { state: { colors } } = useContext(ConstantsContext)
   const color = colors.find(c => c.id === card.colorID)
-  console.log('card', card)
   return (<div className="card" onClick={() => modal.open(card)}>
     <svg className="card-bg">
       <g
