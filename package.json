@@ -54,7 +54,7 @@
     "predist": "yarn build && yarn build:electron",
     "predist:all": "yarn build && yarn build:electron",
     "dist": "electron-builder --publish=onTagOrDraft",
-    "dist:all": "electron-builder -mwl --publish=onTagOrDraft"
+    "dist:all": "electron-builder -mwl -c.extraMetadata.main=./build/electron.js --publish=onTagOrDraft"
   },
   "eslintConfig": {
     "extends": "react-app"
