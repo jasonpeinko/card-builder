@@ -1,0 +1,16 @@
+root = true
+
+[*]
+end_of_ine = lf
+insert_final_newline = true
+
+[*.{ts,tsx,js,jsx,py,scss}]
+charset = utf-8
+
+[*.{ts,tsx,js,jsx,scss}]
+indent_style = space
+indent_size = 2
+
+[{package.json}]
+indent_style = space
+indent_size = 2

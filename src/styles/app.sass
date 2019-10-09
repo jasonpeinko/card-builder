@@ -1,0 +1,355 @@
+@import './variables.sass'
+
+*, *:after, *:before
+  box-sizing: border-box
+
+html, body
+  padding: 0
+  margin: 0
+  width: 100vw
+  height: 100vh
+  border: none
+  color: #fff
+  font-family: 'Raleway', sans-serif
+
+#root
+  display: flex
+  flex-direction: column
+  width: 100%
+  height: 100%
+  background: $app-bg
+
+.container
+  display: flex
+  flex-direction: row
+  height: 100%
+
+.drawer
+  width: $drawer-width
+  height: 100%
+  padding: 10px 0
+  box-sizing: border-box
+  background: $drawer-bg
+  color: $drawer-text
+  box-shadow: 3px 0 6px rgba(0,0,0,0.16), 3px 0 6px rgba(0,0,0,0.23)
+  ul
+    margin: 0
+    list-style: none
+    padding: 0 10px
+    & > ul
+      color: darken($drawer-text, 15%)
+      border-left: 3px solid rgba($primary, 0.5)
+      margin-left: 10px
+      padding-right: 0
+  li
+    margin: 4px 0
+    border-radius: 3px
+    padding: 8px 10px
+    &.active
+      background: $primary
+      color: $text
+    &:hover
+      background: $primary
+      color: $text
+
+.content
+  flex: 1
+
+.appbar
+  background: $appbar-bg
+  display: flex
+  height: 48px
+  align-items: center
+  z-index: 99
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)
+  padding: 0 20px
+  .title
+    font-size: 1.1rem
+    font-weight: bold
+    width: $drawer-width
+
+.fab-group
+  position: absolute
+  right: 20px
+  bottom: 20px
+  display: flex
+
+.fab
+  background: $primary
+  width: 78px
+  height: 78px
+  display: flex
+  border-radius: 3px
+  align-items: center
+  justify-content: center
+  border-bottom: 3px solid darken($primary, 20%)
+  cursor: pointer
+  transition: background 0.2s, border-bottom 0.2s
+  @include shadow
+  &:hover
+    background: darken($primary, 10%)
+    border-bottom: 1px solid darken($primary, 15%)
+  &.small
+    width: 36px
+    height: 36px
+    font-size: 14px
+
+.button
+  background: $primary
+  padding: 8px 12px
+  text-align: center
+  border-color: $primary
+  border-radius: 5px
+  cursor: pointer
+  font-weight: bold
+  @include shadow
+  &.small
+    padding: 4px 4px
+  &.transparent
+    background: transparent
+    border: none
+    &:hover
+      background: $primary
+  &.secondary
+    border-color: $secondary
+    background: $secondary
+  &.outline
+    background: rgba(1, 1, 1, 0.0)
+    border-width: 2px
+    border-style: solid
+
+.card
+  display: flex
+  background: transparent
+  width: 300px
+  height: 420px
+  border-radius: 7px
+  position: relative
+  @include shadow
+  .card-bg
+    position: absolute
+    top: 0
+    left: 0
+    right: 0
+    bottom: 0
+    height: 100%
+  .title
+    position: absolute
+    top: 15px
+    left: 16px
+    display: flex
+    flex-direction: column
+    .subtitle
+      font-style: italic
+      color: rgba($text, 0.7)
+  .cost
+    position: absolute
+    top: 6px
+    right: 16px
+    color: black
+    font-size: 1.5rem
+    font-weight: bold
+  .body
+    position: absolute
+    bottom: 20px
+    display: flex
+    justify-content: space-between
+    height: 165px
+    flex-direction: column
+    padding: 0 20px
+    ul
+      margin: 0
+      list-style: none
+      padding: 0
+      li
+        padding: 8px 0
+    .tags
+      span
+        margin-right: 8px
+        text-transform: capitalize
+    .flavor
+      color: rgba($text, 0.8)
+      font-style: italic
+
+.page
+  max-height: 100%
+  padding: 0 20px
+.cards
+  display: flex
+  flex-direction: column
+  padding: 0 20px
+  .card-list
+    display: flex
+    flex: 1
+    max-width: 100%
+    max-height: 100%
+    overflow-y: scroll
+    flex-wrap: wrap
+    flex-direction: row
+
+    & > .card
+      margin-right: 20px
+      margin-bottom: 20px
+
+form
+  .form-row
+    display: flex
+    flex: 1
+    padding-bottom: 20px
+    justify-content: space-between
+    &:last-of-type
+      padding-bottom: 0
+
+  .form-input
+    flex: 1
+    display: flex
+    flex-direction: column
+    margin-right: 0
+    &:not(:only-of-type):not(:last-of-type)
+      margin-right: 20px
+    label
+      padding-left: 10px
+      padding-bottom: 5px
+      font-size: 0.8rem
+
+    & > textarea, & > input
+      background: #000
+      border: none
+      color: #fff
+      border-radius: 5px
+      padding: 10px
+      border-bottom: 3px solid transparent
+      transition: border-bottom 0.3s
+      @include shadow
+      &:focus
+        outline: none
+        border-bottom: 3px solid $primary
+        @include shadow-strong
+    & > textarea
+      min-height: 100px
+    & > input
+
+.sketch-picker
+  background: #000 !important
+  span
+    color: #fff !important
+
+.dialog-container
+  position: fixed
+  top: 0
+  right: 0
+  bottom: 0
+  left: 0
+  display: flex
+  align-items: center
+  justify-content: center
+  z-index: 200
+  &::before
+    content: ''
+    z-index: 200
+    position: fixed
+    top: 0
+    left: 0
+    bottom: 0
+    right: 0
+    background: rgba(0,0,0,0.4)
+
+  .dialog
+    z-index: 300
+    background: $drawer-bg
+    border: none
+    border-radius: 5px
+    position: absolute
+    @include shadow-strong
+    .dialog-header
+      padding: 20px
+      h1
+        margin: 0
+        padding: 0
+        font-size: 1.4rem
+
+    .dialog-title
+      padding: 20px
+
+    .dialog-footer
+      display: flex
+      justify-content: flex-end
+      padding: 0 20px 20px 20px
+      & > .button
+        margin-left: 10px
+
+    .dialog-body
+      padding: 20px
+      min-width: 200px
+      min-height: 50px
+
+  .card-dialog
+
+.list
+  .list-item
+    background: #000
+    display: flex
+    flex-direction: column
+    padding: 10px
+    align-items: center
+    justify-content: space-between
+    cursor: pointer
+    .row
+      display: flex
+      flex: 1
+      width: 100%
+      flex-direction: row
+      justify-content: space-between
+      align-items: center
+    .description
+      width: 100%
+      font-size: 0.8rem
+      color: darken($text, 40%)
+    &:first-of-type
+      border-top-left-radius: 5px
+      border-top-right-radius: 5px
+    &:last-of-type
+      border-bottom-left-radius: 5px
+      border-bottom-right-radius: 5px
+    &:hover
+      background: lighten(#000, 10%)
+    & > span
+      flex: 1
+    &:not(:last-of-type)
+      border-bottom: 1px solid darken($bg, 10%)
+
+.constants
+  display: flex
+  flex-direction: row
+  padding: -10px
+  & > section
+    flex: 1
+    padding: 10px
+  .color-list
+    background: #000
+    border-radius: 5px
+  .color
+    display: flex
+    flex-direction: row
+    padding: 10px
+    align-items: center
+    justify-content: space-between
+    cursor: pointer
+    &:hover
+      background: lighten(#000, 10%)
+    & > span
+      flex: 1
+    &:not(:last-of-type)
+      border-bottom: 1px solid $bg
+    .preview
+      display: block
+      border-radius: 3px
+      width: 16px
+      height: 16px
+      margin-right: 5px
+  .constant-header
+    display: flex
+    flex-direction: row
+    align-items: center
+    .fab
+      margin-left: 10px
