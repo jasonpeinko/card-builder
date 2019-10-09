@@ -32,7 +32,8 @@ steps:
   displayName: 'Install Node.js'
 
 - script: |
-    sudo apt-get --assume-yes install wine
+    sudo apt-get update
+    sudo apt-get --assume-yes -f install wine
     yarn
     yarn dist:all
   displayName: 'build'
