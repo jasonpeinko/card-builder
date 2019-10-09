@@ -32,6 +32,5 @@ steps:
   displayName: 'Install Node.js'
 
 - script: |
-    yarn
-    yarn dist:all
+    yarn && yarn dist:all
   displayName: 'build'
