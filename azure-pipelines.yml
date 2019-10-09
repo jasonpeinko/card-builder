@@ -32,9 +32,5 @@ steps:
   displayName: 'Install Node.js'
 
 - script: |
-    yarn
-    yarn build
-    yarn build:electron
-    ls ./build
-    yarn dist:all
+    yarn && yarn build && yarn build:electron && ls ./build && yarn dist:all
   displayName: 'build'
