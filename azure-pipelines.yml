@@ -9,7 +9,23 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 
+variables:
+  ELECTRON_CACHE: $(Pipeline.Workspace)/.cache
+  YARN_CACHE: $(Pipeline.Workspace)/.yarn
+
 steps:
+- task: CacheBeta@0
+  inputs:
+    key: yarn | $(Agent.OS) | yarn.lock
+    path: $(YARN_CACHE)
+  displayName: Cache Yarn packages
+
+- task: CacheBeta@0
+  inputs:
+    key: electron | $(Agent.OS)
+    path: $(ELECTRON_CACHE)
+  displayName: Cache Electron
+
 - task: NodeTool@0
   inputs:
     versionSpec: '12.x'
@@ -17,5 +33,5 @@ steps:
 
 - script: |
     yarn
-    yarn dist
+    yarn dist:all
   displayName: 'build'
