@@ -1,6 +1,6 @@
 import { useReducer } from "react"
 
-type FieldValue = string | number
+type FieldValue = string | number | string[] | number[]
 type Action =
   | { type: 'set-value', name: string, value: FieldValue }
   | { type: 'set-values', values: any }

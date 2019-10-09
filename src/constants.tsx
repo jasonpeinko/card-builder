@@ -1,6 +1,6 @@
 import React, { useContext, useReducer, useRef } from 'react'
 import { FAB, Card, Button, List, Dialog } from './ui'
-import { ConstantsContext, ContstantsDispatch } from './data/constants'
+import { DataContext, ContstantsDispatch, useDataContext } from './data/constants'
 import ColorDialog from './constants/color-dialog'
 import KeywordDialog from './constants/keyword-dialog'
 import { useDataModal } from './ui/dialog'
@@ -45,7 +45,7 @@ type Action =
   | { type: 'keyword.open', keyword: CardKeyword | null }
   | { type: 'keyword.close' }
 const Constants: React.FC = () => {
-  const { state: { colors, keywords }, dispatch } = useContext(ConstantsContext)
+  const { state: { colors, keywords }, dispatch } = useDataContext()
   const colorModal = useDataModal<Color>(() => ({ name: '', hex: '#ff00ff' }))
   const keywordModal = useDataModal<CardKeyword>(() => ({ label: '', value: '', description: '' }))
   return (<div className="page constants">
@@ -88,7 +88,7 @@ const Constants: React.FC = () => {
         }} />
       </div>
       <List.Container>
-        {keywords.map(k => {
+        {keywords.map((k) => {
           return (<List.Item
             onClick={() => {
               keywordModal.open(k)

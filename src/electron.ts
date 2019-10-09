@@ -17,7 +17,7 @@ const createWindow = () => {
   //   path.join(__dirname, '/../public/index.html'),
   // )
   const url = isDev
-    ? 'http://localhost:3330'
+    ? 'http://localhost:3333'
     : `file://${path.join(__dirname, '../build/index.html')}`
   mainWindow.loadURL(url)
   mainWindow.on('closed', () => {

@@ -1,4 +1,4 @@
-import React, { useReducer, useEffect } from 'react'
+import React, { useReducer, useEffect, useContext } from 'react'
 
 interface State {
   cards: Card[]
@@ -23,9 +23,18 @@ type Action =
 type Context = {
   state: State
   dispatch: (a: Action) => void
+  getKeyword: (id: EntityID) => CardKeyword | undefined
+  getColor: (id: EntityID) => Color | undefined
 }
 export type ContstantsDispatch = (a: Action) => void
-export const ConstantsContext = React.createContext<Context>({ state: { ...defaultState }, dispatch: (a: Action) => null })
+export const DataContext = React.createContext<Context | undefined>(undefined)
+export const useDataContext = () => {
+  const c = useContext(DataContext)
+  if (!c) {
+    throw new Error('data context not in provider')
+  }
+  return c
+}
 
 const upsert = <T extends { id?: EntityID }>(arr: T[], item: T) => {
   const newItem = { ...item }
@@ -110,17 +119,25 @@ const Provider: React.FC = ({ children }) => {
     load()
   }, [])
 
+  const getColor = (id: EntityID) => {
+    return state.colors.find(c => c.id === id)
+  }
+
+  const getKeyword = (id: EntityID) => {
+    return state.keywords.find(c => c.id === id)
+  }
+
   const context = {
     state,
-    dispatch
+    dispatch,
+    getKeyword,
+    getColor,
   }
-  console.log('context', context)
-  // console.log(context)
 
   return (
-    <ConstantsContext.Provider value={context}>
+    <DataContext.Provider value={context}>
       {children}
-    </ConstantsContext.Provider>
+    </DataContext.Provider>
   )
 }
 export default Provider

@@ -123,7 +123,7 @@ type SelectOption = {
 }
 type SelectProps = Partial<JSX.LibraryManagedAttributes<typeof ReactSelect, ReactSelect['props']>> & {
   options: SelectOption[],
-  selected: string | string[]
+  selected: string
   label: string
 }
 
@@ -139,10 +139,28 @@ export const Select: React.FC<SelectProps> = ({ label, selected, options, ...pro
   </div>)
 }
 
+type MultiSelectProps = Partial<JSX.LibraryManagedAttributes<typeof ReactSelect, ReactSelect['props']>> & {
+  options: SelectOption[],
+  selected: string[]
+  label: string
+}
+export const MultiSelect: React.FC<MultiSelectProps> = ({ label, selected, options, ...props }) => {
+  const value = options.filter(o => selected.find((s) => s === o.value))
+  return (<div className="form-input select">
+    <label>{label}</label>
+    <ReactSelect
+      value={value}
+      styles={selectStyles}
+      options={options}
+      {...props} />
+  </div>)
+}
+
 export default {
   TextInput,
   TextArea,
   ColorPicker,
   Select,
+  MultiSelect,
   Row
 }

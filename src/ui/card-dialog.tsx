@@ -3,7 +3,6 @@ import Forms from './forms'
 import Button from './button'
 import { Dialog } from '.'
 import useForm from '../hooks/use-form'
-import { array } from 'prop-types'
 
 type Props = {
   colors: Color[]
@@ -19,12 +18,15 @@ const buildColorOptions = (colors: Color[]) => {
     value: c.id ? c.id.toString() : '0'
   }))
 }
-const buildKeywordOptions = (keywords: CardKeyword[]) => {
-  return keywords.map(c => ({
-    label: c.label,
+const keywordOption = (k: CardKeyword) => {
+  return {
+    label: k.label,
     color: '#fff',
-    value: c.id ? c.id.toString() : '0'
-  }))
+    value: k.id ? k.id.toString() : '0'
+  }
+}
+const buildKeywordOptions = (keywords: CardKeyword[]) => {
+  return keywords.map(keywordOption)
 }
 const CardDialog: React.FC<Props> = ({ colors, keywords, children, modal, onClose, onSave }) => {
   const { setValue, setValues, values, handleSubmit } = useForm<Card>(modal.data)
@@ -69,9 +71,16 @@ const CardDialog: React.FC<Props> = ({ colors, keywords, children, modal, onClos
           />
         </Forms.Row>
         <Forms.Row>
-          <Forms.Select label="Keywords"
+          <Forms.MultiSelect label="Keywords"
             selected={values.keywords.map(k => k.toString())}
-            onChange={() => null}
+            onChange={(v) => {
+              console.log(v)
+              if (Array.isArray(v)) {
+                const ids = v.map(v => parseInt(v.value, 10))
+                console.log(ids)
+                setValue('keywords', ids)
+              }
+            }}
             isMulti
             options={buildKeywordOptions(keywords)}
           />

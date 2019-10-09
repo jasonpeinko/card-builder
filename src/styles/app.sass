@@ -125,44 +125,63 @@ html, body
   height: 420px
   border-radius: 7px
   position: relative
+  border-style: solid
+  border-width: 5px
+  border-color: transparent
+  flex-direction: column
+  justify-content: center
+  padding: 10px
   @include shadow
-  .card-bg
-    position: absolute
-    top: 0
-    left: 0
-    right: 0
-    bottom: 0
-    height: 100%
+  .card-row
+    display: flex
+    flex-direction: row
+  .card-header
+    justify-content: space-between
+    flex: 1
   .title
-    position: absolute
-    top: 15px
-    left: 16px
     display: flex
     flex-direction: column
     .subtitle
       font-style: italic
       color: rgba($text, 0.7)
   .cost
-    position: absolute
-    top: 6px
-    right: 16px
-    color: black
-    font-size: 1.5rem
+    color: #fff
+    font-size: 1.3rem
     font-weight: bold
-  .body
-    position: absolute
-    bottom: 20px
+  .keywords
+    font-style: italic
+    color: darken(#fff, 30%)
+  .card-footer
+    justify-content: center
+    .stats
+      padding: 4px 8px
+      border-radius: 5px
+      width: 100px
+      @include shadow-inset
+      background: rgba(0,0,0, 0.2)
+      align-self: flex-end
+      display: flex
+      flex-direction: row
+      justify-content: center
+      align-items: center
+      font-size: 1.8rem
+      .divider
+        width: 8px
+        height: 8px
+        border-radius: 50%
+        margin: 0 10px
+        background: white
+  .card-body
     display: flex
-    justify-content: space-between
-    height: 165px
+    justify-content: flex-start
     flex-direction: column
-    padding: 0 20px
+    height: 160px
     ul
-      margin: 0
+      margin: 0 0 8px 0
       list-style: none
       padding: 0
       li
-        padding: 8px 0
+        padding: 2px 0
     .tags
       span
         margin-right: 8px
@@ -186,6 +205,7 @@ html, body
     overflow-y: scroll
     flex-wrap: wrap
     flex-direction: row
+    padding: 5px
 
     & > .card
       margin-right: 20px

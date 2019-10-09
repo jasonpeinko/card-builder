@@ -1,11 +1,11 @@
 import React, { useContext } from 'react'
 import { FAB, Card } from './ui'
 import CardDialog from './ui/card-dialog'
-import { ConstantsContext } from './data/constants'
+import { DataContext, useDataContext } from './data/constants'
 import { useDataModal } from './ui/dialog'
 
 const Cards: React.FC = () => {
-  const { state: { cards, colors, keywords }, dispatch } = useContext(ConstantsContext)
+  const { state: { cards, colors, keywords }, dispatch } = useDataContext()
   const modal = useDataModal<Card>(() => ({
     cost: 4,
     name: '',
@@ -30,7 +30,7 @@ const Cards: React.FC = () => {
       }} />
     <h1>Cards</h1>
     <div className="card-list">
-      {cards.map(c => <Card modal={modal} card={c} key={c.id} />)}
+      {cards.map((c: Card) => <Card modal={modal} card={c} key={c.id} />)}
     </div>
     <FAB.Group>
       <FAB.Button icon="plus" onClick={() => {
