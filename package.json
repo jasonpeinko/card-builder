@@ -1,6 +1,6 @@
 {
   "name": "card-builder",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "homepage": "./",
   "main": "dist/electron.js",
@@ -50,8 +50,8 @@
     "predist": "yarn build && yarn build:electron",
     "pack": "electron-builder --dir",
     "release": "./scripts/release.sh",
-    "dist": "electron-builder --publish=onTag",
-    "dist:all": "electron-builder -mwl --publish=onTag"
+    "dist": "electron-builder --publish=onTagOrDraft",
+    "dist:all": "electron-builder -mwl --publish=onTagOrDraft"
   },
   "eslintConfig": {
     "extends": "react-app"
