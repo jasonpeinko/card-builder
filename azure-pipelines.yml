@@ -19,6 +19,3 @@ steps:
     yarn
     yarn dist
   displayName: 'build'
-
-- publish: $(System.DefaultWorkingDirectory)/dist
-  artifact: Desktop

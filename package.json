@@ -49,7 +49,9 @@
     "eject": "react-scripts eject",
     "predist": "yarn build && yarn build:electron",
     "pack": "electron-builder --dir",
-    "dist": "electron-builder"
+    "release": "./scripts/release.sh",
+    "dist": "electron-builder --publish=onTag",
+    "dist:all": "electron-builder -mwl --publish=onTag"
   },
   "eslintConfig": {
     "extends": "react-app"

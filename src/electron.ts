@@ -9,8 +9,8 @@ let mainWindow: any
 
 const createWindow = () => {
   mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: 1200,
+    height: 800,
     frame: false
   })
   // mainWindow.loadFile(
@@ -19,7 +19,6 @@ const createWindow = () => {
   const url = isDev
     ? 'http://localhost:3330'
     : `file://${path.join(__dirname, '../build/index.html')}`
-  console.log(url)
   mainWindow.loadURL(url)
   mainWindow.on('closed', () => {
     mainWindow = null
