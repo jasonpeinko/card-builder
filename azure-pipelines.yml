@@ -32,6 +32,7 @@ steps:
   displayName: 'Install Node.js'
 
 - script: |
+    apt-get --assume-yes install wine
     yarn
     yarn dist:all
   displayName: 'build'
