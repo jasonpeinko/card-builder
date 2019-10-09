@@ -3,12 +3,12 @@
   "version": "0.1.1",
   "private": true,
   "homepage": "./",
-  "main": "dist/electron.js",
+  "main": "build/electron.js",
   "build": {
     "appId": "com.jasonpeinko.card-builder",
     "files": [
-      "build/**/*",
-      "node_modules/**/*"
+      "./build/**/*",
+      "./node_modules/**/*"
     ],
     "directories": {
       "buildResources": "public"

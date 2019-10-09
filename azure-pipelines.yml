@@ -16,7 +16,7 @@ variables:
 steps:
 - task: CacheBeta@0
   inputs:
-    key: yarn | $(Agent.OS) | yarn.lock
+    key: v1 | yarn | $(Agent.OS) | yarn.lock
     path: $(YARN_CACHE)
   displayName: Cache Yarn packages
 
@@ -32,5 +32,5 @@ steps:
   displayName: 'Install Node.js'
 
 - script: |
-    yarn && yarn build && yarn build:electron && ls ./build && yarn dist:all
+    yarn && yarn dist:all
   displayName: 'build'
