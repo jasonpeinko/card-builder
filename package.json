@@ -49,9 +49,10 @@
     "build:electron": "tsc -p tsconfig-electron.json",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "predist": "yarn build && yarn build:electron",
     "pack": "electron-builder --dir",
     "release": "./scripts/release.sh",
+    "predist": "yarn build && yarn build:electron",
+    "predist:all": "yarn build && yarn build:electron",
     "dist": "electron-builder --publish=onTagOrDraft",
     "dist:all": "electron-builder -mwl --publish=onTagOrDraft"
   },
