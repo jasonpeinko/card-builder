@@ -37,15 +37,15 @@ steps:
     versionSpec: '12.x'
   displayName: 'Install Node.js'
 
-- script: yarn && yarn build && yarn:build:electron
+- script: yarn && yarn build && yarn build:electron
   displayName: 'fetch node dependencies and build'
 
 - script: |
-    yarn && yarn dist:windows && yarn dist:linux
+    yarn dist:windows && yarn dist:linux
   condition: eq( variables['Agent.OS'], 'Windows_NT' )
   displayName: 'build electron app for windows and linux'
 
 - script: |
-    yarn && yarn dist:mac
+    yarn dist:mac
   condition: eq( variables['Agent.OS'], 'Darwin' )
   displayName: 'build electron app for mac'
