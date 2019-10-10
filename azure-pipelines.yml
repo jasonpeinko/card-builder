@@ -6,8 +6,14 @@
 trigger:
 - master
 
+strategy:
+  matrix:
+    mac:
+      imageName: 'macOS-latest'
+    windows:
+      imageName: 'windows-latest'
 pool:
-  vmImage: 'windows-latest'
+  vmImage: $(imageName)
 
 variables:
   ELECTRON_CACHE: $(Pipeline.Workspace)/.cache
@@ -32,5 +38,11 @@ steps:
   displayName: 'Install Node.js'
 
 - script: |
-    yarn && yarn dist:all
+    yarn && yarn dist:windows && yarn dist:linux
+  condition: eq( variables['Agent.OS'], 'Windows_NT' )
+  displayName: 'build'
+
+- script: |
+    yarn && yarn dist:mac
+  condition: eq( variables['Agent.OS'], 'Darwin' )
   displayName: 'build'
