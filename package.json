@@ -27,7 +27,8 @@
     "react-scripts": "3.2.0",
     "react-select": "^3.0.8",
     "typescript": "^3.6.3"
-  },https: //github.com/electron-userland/electron-builder/issues/2404 "devDependencies": {
+  },
+  "devDependencies": {
     "@types/hookrouter": "^2.2.1",
     "@types/jest": "24.0.18",
     "@types/node": "12.7.12",
