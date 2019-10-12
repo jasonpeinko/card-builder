@@ -1,7 +1,5 @@
-type Tag = 'creature' | 'monster' | 'curse' | 'treasure' | 'equipment'
 type CardID = number
 type EntityID = number
-type Affix = 'text' | 'ability' | 'passive' | 'preview' | 'curse' | 'equipment'
 
 type CardRarity = {
   label: string
@@ -15,13 +13,15 @@ type CardAffix = {
   text: string
 }
 
+type Filename = string
 type Card = {
   cost: number
   name: string
   subtitle: string
   body: string
-  keywords: EntityID[]
+  keywords: { id: EntityID; count: number }[]
   colorID: EntityID
+  image: Filename
   power: number
   toughness: number
   id: EntityID
@@ -65,3 +65,15 @@ type DataModalProps<T> = {
   data: T
   reset: () => T
 }
+
+type SocketServerAction =
+  | { type: 'save'; data: any }
+  | { type: 'load' }
+  | { type: 'pick-image' }
+  | { type: 'store-image'; image: string; data: string; project: string }
+  | { type: 'load-image'; image: string; project: string }
+type SocketClientAction =
+  | { type: 'saved' }
+  | { type: 'loaded'; project: string; data: any }
+  | { type: 'image'; image: string; data: string }
+  | { type: 'paste-image'; data: string }

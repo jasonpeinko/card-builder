@@ -1,6 +1,4 @@
-import React, { useState, useImperativeHandle, ReactNode } from 'react'
-import useForm from 'react-hook-form'
-import Button from './button'
+import React, { ReactNode, useState } from 'react'
 
 export const useDataModal = <T extends {}>(reset: () => T) => {
   const [isOpen, setOpen] = useState(false)
@@ -12,8 +10,8 @@ export const useDataModal = <T extends {}>(reset: () => T) => {
   }
 
   const closeModal = () => {
+    setData(reset())
     setOpen(false)
-    reset()
   }
   return {
     open: openModal,
@@ -26,38 +24,42 @@ export const useDataModal = <T extends {}>(reset: () => T) => {
 
 type Props<T> = {
   open: boolean
+  className?: string
   children: ReactNode
+  onPaste?: (e: React.ClipboardEvent<HTMLDivElement>) => void
 }
-const Modal = <T extends {}>({ open, children }: Props<T>) => {
+const Modal = <T extends {}>({
+  className = '',
+  onPaste,
+  open,
+  children
+}: Props<T>) => {
   if (!open) {
     return null
   }
-  return (<div className="dialog-container">
-    <div className="dialog">
-      {children}
+  return (
+    <div
+      className={`dialog-container ${className}`}
+      onPaste={e => (onPaste ? onPaste(e) : null)}
+    >
+      <div className='dialog'>{children}</div>
     </div>
-  </div>)
+  )
 }
 
 type BodyProps = {}
 const Body: React.FC<BodyProps> = ({ children }) => {
-  return (<div className="dialog-body">
-    {children}
-  </div>)
+  return <div className='dialog-body'>{children}</div>
 }
 
 type HeaderProps = {}
 const Header: React.FC<HeaderProps> = ({ children }) => {
-  return (<div className="dialog-header">
-    {children}
-  </div>)
+  return <div className='dialog-header'>{children}</div>
 }
 
 type FooterProps = {}
 const Footer: React.FC<FooterProps> = ({ children }) => {
-  return (<div className="dialog-footer">
-    {children}
-  </div>)
+  return <div className='dialog-footer'>{children}</div>
 }
 
 export default {

@@ -1,15 +1,13 @@
-import React from 'react'
-import Button from './button'
+import React from "react";
+import Button from "./button";
 
 const AppBar: React.FC = () => {
-  return (<div className="appbar">
-    <span className="title">
-      Card Builder
-    </span>
-    <div className="actions">
-      <Button onClick={() => null} label="Test Draw" color="secondary" variant="solid" />
+  return (
+    <div className="appbar">
+      <span className="title">Card Builder</span>
+      <div className="actions"></div>
     </div>
-  </div>)
-}
+  );
+};
 
-export default AppBar
+export default AppBar;

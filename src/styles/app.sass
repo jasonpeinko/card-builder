@@ -32,6 +32,12 @@ html, body
   background: $drawer-bg
   color: $drawer-text
   box-shadow: 3px 0 6px rgba(0,0,0,0.16), 3px 0 6px rgba(0,0,0,0.23)
+  .actions
+    display: flex
+    flex-direction: row
+    padding: 10px 20px 5px 20px
+    > *
+      margin-right: 5px
   ul
     margin: 0
     list-style: none
@@ -71,13 +77,13 @@ html, body
 .fab-group
   position: absolute
   right: 20px
-  bottom: 20px
+  top: 60px
   display: flex
 
 .fab
   background: $primary
-  width: 78px
-  height: 78px
+  width: 58px
+  height: 58px
   display: flex
   border-radius: 3px
   align-items: center
@@ -103,6 +109,8 @@ html, body
   cursor: pointer
   font-weight: bold
   @include shadow
+  &:hover
+    background: darken($primary, 6%)
   &.small
     padding: 4px 4px
   &.transparent
@@ -113,50 +121,93 @@ html, body
   &.secondary
     border-color: $secondary
     background: $secondary
+    &:hover
+      background: darken($secondary, 10%)
   &.outline
     background: rgba(1, 1, 1, 0.0)
     border-width: 2px
     border-style: solid
-
+::-webkit-scrollbar
+  width: 8px
+::-webkit-scrollbar-track
+  background: transparent
+  color: blue
+::-webkit-scrollbar-thumb
+  border-radius: 4px
+  background: rgba(0,0,0,0.5)
 .card
   display: flex
   background: transparent
   width: 300px
   height: 420px
-  border-radius: 7px
+  border-radius: 15px
+  overflow: hidden
+  background-size: 300px 420px
   position: relative
   border-style: solid
   border-width: 5px
   border-color: transparent
   flex-direction: column
-  justify-content: center
-  padding: 10px
+  justify-content: space-between
   @include shadow
+  .art
+    position: absolute
+    top: 40px
+    background-size: 300px 200px
   .card-row
     display: flex
     flex-direction: row
   .card-header
-    justify-content: space-between
-    flex: 1
+    justify-content: center
+    border-radius: 0px 0px 10px 10px
+    padding: 3px 15px 10px 15px
+    @include shadow
   .title
     display: flex
+    font-size: 1.2rem
+    align-items: flex-end
+    justify-content: bottom
     flex-direction: column
     .subtitle
       font-style: italic
       color: rgba($text, 0.7)
   .cost
+    position: absolute
     color: #fff
     font-size: 1.3rem
     font-weight: bold
+    align-self: flex-end
+    width: 26px
+    height: 26px
+    top: 3px
+    right: 3px
+    display: flex
+    align-items: center
+    justify-content: center
+    border-radius: 50%
+    padding: 0 0 4px 0
+    background: rgba(#000, 0.4)
+    justify-self: flex-end
+    @include shadow-inset
   .keywords
+    display: flex
+    flex-direction: row
     font-style: italic
     color: darken(#fff, 30%)
+    li
+      margin-right: 10px
+      .count
+        margin-left: kpx
   .card-footer
+    width: 100%
+    margin-top: 10px
+    align-self: center
+    align-items: center
     justify-content: center
     .stats
-      padding: 4px 8px
+      padding: 4px 4px
       border-radius: 5px
-      width: 100px
+      min-width: 80px
       @include shadow-inset
       background: rgba(0,0,0, 0.2)
       align-self: flex-end
@@ -164,7 +215,7 @@ html, body
       flex-direction: row
       justify-content: center
       align-items: center
-      font-size: 1.8rem
+      font-size: 1.4rem
       .divider
         width: 8px
         height: 8px
@@ -173,9 +224,11 @@ html, body
         background: white
   .card-body
     display: flex
-    justify-content: flex-start
+    white-space: pre-line
     flex-direction: column
-    height: 160px
+    border-radius: 20px 20px 0px 0px
+    padding: 15px 15px 10px 15px
+    justify-content: flex-end
     ul
       margin: 0 0 8px 0
       list-style: none
@@ -219,8 +272,14 @@ form
     justify-content: space-between
     &:last-of-type
       padding-bottom: 0
-
+  .form-error
+    color: #d9113c
+    position: absolute
+    right: 0
+    top: 0
+    font-size: 0.8rem
   .form-input
+    position: relative
     flex: 1
     display: flex
     flex-direction: column
@@ -293,8 +352,10 @@ form
 
     .dialog-footer
       display: flex
-      justify-content: flex-end
+      justify-content: space-between
       padding: 0 20px 20px 20px
+      .group
+        margin-right: auto
       & > .button
         margin-left: 10px
 
@@ -303,8 +364,29 @@ form
       min-width: 200px
       min-height: 50px
 
-  .card-dialog
-
+.card-modal
+  .keyword-list
+    background: darken($bg, 4%)
+    border-radius: 5px
+    padding: 10px
+    margin-bottom: 20px
+    display: flex
+    flex-direction: column
+  .keyword-row
+    justify-content: space-between
+    flex: 1
+    display: flex
+    flex-direction: row
+    align-items: center
+    > span
+      flex: 1
+  .preview
+    margin-right: 20px
+  .art
+    width: 300px
+    height: 270px
+    background-size: 300px 270px
+    margin-right: 20px
 .list
   .list-item
     background: #000
@@ -373,3 +455,14 @@ form
     align-items: center
     .fab
       margin-left: 10px
+
+.status-bar
+  display: flex
+  background: darken($bg, 4%)
+  width: 100%
+  height: 36px
+  @include shadow-inset
+  padding: 0 10px
+  justify-content: space-between
+  color: darken($text, 60%)
+  align-items: center
