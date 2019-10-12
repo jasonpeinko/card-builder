@@ -50,7 +50,9 @@ const Card: React.FC<CardProps> = ({ modal, imageBase64, card }) => {
       >
         <ul className='keywords'>
           {card.keywords.map(k => {
-            const kw = getKeyword(k.id)
+            const kw = getKeyword(
+              typeof k.id === 'string' ? parseInt(k.id, 10) : k.id
+            )
             if (!kw) return null
             return (
               <li key={k.id}>
