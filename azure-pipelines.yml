@@ -4,7 +4,7 @@
 # https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
 
 trigger:
-- master
+  - master
 
 strategy:
   matrix:
@@ -20,32 +20,32 @@ variables:
   YARN_CACHE: $(Pipeline.Workspace)/node_modules
 
 steps:
-- task: CacheBeta@0
-  inputs:
-    key: v1 | yarn | $(Agent.OS) | yarn.lock
-    path: $(YARN_CACHE)
-  displayName: Cache Yarn packages
+  - task: CacheBeta@0
+    inputs:
+      key: v1 | yarn | $(Agent.OS) | yarn.lock
+      path: $(YARN_CACHE)
+    displayName: Cache Yarn packages
 
-- task: CacheBeta@0
-  inputs:
-    key: electron | $(Agent.OS)
-    path: $(ELECTRON_CACHE)
-  displayName: Cache Electron
+  # - task: CacheBeta@0
+  #   inputs:
+  #     key: electron | $(Agent.OS)
+  #     path: $(ELECTRON_CACHE)
+  #   displayName: Cache Electron
 
-- task: NodeTool@0
-  inputs:
-    versionSpec: '12.x'
-  displayName: 'Install Node.js'
+  - task: NodeTool@0
+    inputs:
+      versionSpec: '12.x'
+    displayName: 'Install Node.js'
 
-- script: yarn && yarn build && yarn build:electron
-  displayName: 'fetch node dependencies and build'
+  - script: yarn && yarn build && yarn build:electron
+    displayName: 'fetch node dependencies and build'
 
-- script: |
-    yarn dist:windows && yarn dist:linux
-  condition: eq( variables['Agent.OS'], 'Windows_NT' )
-  displayName: 'build electron app for windows and linux'
+  - script: |
+      yarn dist:windows && yarn dist:linux
+    condition: eq( variables['Agent.OS'], 'Windows_NT' )
+    displayName: 'build electron app for windows and linux'
 
-- script: |
-    yarn dist:mac
-  condition: eq( variables['Agent.OS'], 'Darwin' )
-  displayName: 'build electron app for mac'
+  - script: |
+      yarn dist:mac
+    condition: eq( variables['Agent.OS'], 'Darwin' )
+    displayName: 'build electron app for mac'

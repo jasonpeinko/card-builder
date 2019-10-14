@@ -15,7 +15,6 @@
     }
   },
   "dependencies": {
-    "@types/adm-zip": "^0.4.32",
     "@types/chroma-js": "^1.4.3",
     "@types/jszip": "^3.1.6",
     "@types/lodash": "^4.14.144",
@@ -23,7 +22,6 @@
     "@types/ws": "^6.0.3",
     "@types/yaml": "^1.2.0",
     "@types/yup": "^0.26.24",
-    "adm-zip": "^0.4.13",
     "chroma-js": "^2.0.6",
     "electron-is-dev": "^1.1.0",
     "hookrouter": "^1.2.3",
@@ -36,8 +34,6 @@
     "react-color": "^2.17.3",
     "react-dom": "^16.10.2",
     "react-file-picker": "^0.0.6",
-    "react-form-hook": "^0.0.1",
-    "react-hook-form": "^3.23.18",
     "react-scripts": "3.2.0",
     "react-select": "^3.0.8",
     "typescript": "^3.7.0-dev.20191011",
@@ -73,7 +69,8 @@
     "dist": "electron-builder --publish=onTagOrDraft",
     "dist:windows": "electron-builder -w -c.extraMetadata.main=./build/electron.js --publish=onTagOrDraft",
     "dist:mac": "electron-builder -m -c.extraMetadata.main=./build/electron.js --publish=onTagOrDraft",
-    "dist:linux": "electron-builder -l -c.extraMetadata.main=./build/electron.js --publish=onTagOrDraft"
+    "dist:linux": "electron-builder -l -c.extraMetadata.main=./build/electron.js --publish=onTagOrDraft",
+    "dist:all": "electron-builder -wl -c.extraMetadata.main=./build/electron.js --publish=onTagOrDraft"
   },
   "eslintConfig": {
     "extends": "react-app"
