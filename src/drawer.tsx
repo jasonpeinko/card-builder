@@ -3,25 +3,35 @@ import { usePath, navigate } from 'hookrouter'
 import { FAB } from './ui'
 import { useSocket } from './hooks/use-socket'
 import { useProjectContext } from './data/project'
-import { arrowFunctionExpression } from '@babel/types'
+import { useDataModal } from './ui/dialog'
+import CollectionModal from './ui/collection-modal'
+import Icon from './ui/icon'
 
 type ItemProps = {
   label: string
   link?: string
   className?: string
   active?: boolean
+  onClick?: () => void
+  style?: {}
 }
 const Item: React.FC<ItemProps> = ({
   link = '/',
   label = 'Label',
   active = false,
-  className = ''
+  className = '',
+  style,
+  onClick,
+  children
 }) => {
+  console.log(style)
   return (
     <li
       className={`${className} ${active ? 'active' : ''}`}
-      onClick={() => navigate(link)}
+      style={style}
+      onClick={() => (onClick ? onClick() : navigate(link))}
     >
+      {children}
       {label}
     </li>
   )
@@ -30,7 +40,16 @@ const Item: React.FC<ItemProps> = ({
 const Drawer: React.FC = () => {
   const path = usePath()
   const ws = useSocket()
-  const { state, dispatch } = useProjectContext()
+  const { state, dispatch, getColor } = useProjectContext()
+  const { collections } = state
+  const collectionModal = useDataModal<Collection>(() => {
+    return {
+      id: -1,
+      name: 'New Collection',
+      color: '#ff0000',
+      cards: []
+    }
+  })
   useEffect(() => {
     return ws.on(action => {
       if (action.type === 'loaded') {
@@ -83,15 +102,39 @@ const Drawer: React.FC = () => {
         />
         <Item label='Collections' />
         <ul>
-          <Item label='Create Collection' className='add' />
-        </ul>
-        <Item label='Decks' />
-        <ul>
-          <Item label='Create Collection' className='add' />
+          {collections.map(c => {
+            console.log(path)
+            return (
+              <Item
+                key={c.id}
+                label={c.name}
+                active={path === '/collection/' + c.id}
+                link={`/collection/${c.id}`}
+                style={{ color: c.color }}
+              />
+            )
+          })}
+          <Item
+            label='Create Collection'
+            className='add'
+            onClick={() => {
+              collectionModal.open(null)
+            }}
+          >
+            <Icon icon='plus' size={18} />
+          </Item>
         </ul>
         <Item label='Quick Draw' />
         <Item label='Test Play' />
       </ul>
+      <CollectionModal
+        modal={collectionModal}
+        onClose={() => {}}
+        onSave={values => {
+          dispatch({ type: 'collection.upsert', collection: values })
+          collectionModal.close()
+        }}
+      />
     </div>
   )
 }

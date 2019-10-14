@@ -1,11 +1,5 @@
 import { State } from './project'
-import Cards from '../cards'
 const currentVersion = 2
-export const migration = (
-  data: State,
-  fromVersion: number,
-  toVersion: number
-) => {}
 
 const migrations = [
   (data: State, from: number, to: number) => {

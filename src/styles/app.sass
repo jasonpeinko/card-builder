@@ -23,7 +23,48 @@ html, body
   display: flex
   flex-direction: row
   height: 100%
-
+.collection
+  .header
+    display: flex
+    align-items: center
+    justify-content: space-between
+    flex-direction: row
+  .row
+    display: flex
+    flex-direction: row
+  .collection-cards
+    width: 300px
+    padding-right: 20px
+  .sidebar
+    flex: 1
+  .card-list
+    display: flex
+    flex-direction: column
+    border-radius: 5px
+    overflow: hidden
+  .card-row
+    color: rgba($text, 0.6)
+    display: flex
+    padding: 4px 10px
+    justify-content: space-between
+    align-items: center
+    flex: 1
+    box-shadow: inset 0 -1px 1px rgba(0,0,0,0.2), inset 0 1px 1px rgba(#fff,0.04)
+    .fab
+      background: transparent
+      box-shadow: none
+      border-radius: 15px
+      width: 30px
+      height: 30px
+      border: none
+      margin-right: 10px
+      &:hover
+        background: $primary
+    .name
+      flex: 1
+    > div
+      display: flex
+      flex-direction: row
 .drawer
   width: $drawer-width
   height: 100%
@@ -51,9 +92,16 @@ html, body
     margin: 4px 0
     border-radius: 3px
     padding: 8px 10px
+    cursor: pointer
+    display: flex
+    align-items: center
+    i
+      margin-right: 5px
+    &.add
+      color: darken($drawer-text, 35%)
     &.active
       background: $primary
-      color: $text
+      color: $text !important
     &:hover
       background: $primary
       color: $text
@@ -259,10 +307,15 @@ html, body
     flex-wrap: wrap
     flex-direction: row
     padding: 5px
-
-    & > .card
+    .card-wrap
+      width: 150px
+      height: 220px
       margin-right: 20px
       margin-bottom: 20px
+
+    .card
+      transform: scale(0.5)
+      transform-origin: 0px 0px
 
 form
   .form-row
@@ -372,6 +425,7 @@ form
     margin-bottom: 20px
     display: flex
     flex-direction: column
+    @include shadow-inset
   .keyword-row
     justify-content: space-between
     flex: 1
@@ -442,7 +496,7 @@ form
     & > span
       flex: 1
     &:not(:last-of-type)
-      border-bottom: 1px solid $bg
+      border-bottom: 1pxasolid $bg
     .preview
       display: block
       border-radius: 3px
@@ -466,3 +520,6 @@ form
   justify-content: space-between
   color: darken($text, 60%)
   align-items: center
+
+.collection
+  padding: 0 20px

@@ -88,6 +88,7 @@ const useForm = <T extends {}>(
     return null
   }
   const handleSubmit = (callback: (v: T) => void) => {
+    console.log(state.values)
     const values = validate()
     if (values) {
       callback(values)

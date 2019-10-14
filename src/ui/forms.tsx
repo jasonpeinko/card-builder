@@ -201,6 +201,7 @@ export const MultiSelect: React.FC<MultiSelectProps> = ({
         value={value}
         styles={selectStyles}
         options={options}
+        isMulti
         {...props}
       />
     </div>

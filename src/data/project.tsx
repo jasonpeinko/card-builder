@@ -1,12 +1,17 @@
 import React, { useReducer, useEffect, useContext } from 'react'
-import { array } from 'prop-types'
 import { migrate } from './migrations'
+import { upsert, remove, nextID } from './util'
+import collectionsReducer, {
+  CollectionsState,
+  CollectionAction
+} from './collections'
 
 export interface State {
   meta: {
     version: number
     projectFile: string
   }
+  collections: CollectionsState
   cards: Card[]
   colors: Color[]
   keywords: CardKeyword[]
@@ -17,6 +22,7 @@ const defaultState: State = {
     projectFile: '',
     version: 1
   },
+  collections: [],
   cards: [],
   colors: [],
   keywords: [],
@@ -31,11 +37,14 @@ type Action =
   | { type: 'color.remove'; color: Color }
   | { type: 'keyword.upsert'; keyword: CardKeyword }
   | { type: 'keyword.remove'; keyword: CardKeyword }
+  | CollectionAction
 type Context = {
   state: State
   dispatch: (a: Action) => void
   getKeyword: (id: EntityID) => CardKeyword | undefined
   getColor: (id: EntityID) => Color | undefined
+  getCollection: (id: EntityID) => Collection | undefined
+  getCard: (id: EntityID) => Card | undefined
 }
 export type ContstantsDispatch = (a: Action) => void
 export const ProjectContext = React.createContext<Context | undefined>(
@@ -48,29 +57,6 @@ export const useProjectContext = () => {
   }
   return c
 }
-
-const upsert = <T extends { id?: EntityID }>(arr: T[], item: T) => {
-  const newItem = { ...item }
-  if (!newItem.id || newItem.id < 0) {
-    newItem.id = nextID(arr)
-    console.log(newItem.id)
-    return [...arr, newItem]
-  }
-  return arr.map(i => {
-    if (i.id === item.id) {
-      return item
-    }
-    return i
-  })
-}
-
-const remove = <T extends { id?: EntityID }>(arr: T[], item: T) =>
-  arr.filter(i => i.id !== item.id)
-
-const nextID = <T extends { id?: EntityID }>(arr: T[]) =>
-  arr.reduce((acc, i) => {
-    return Math.max(i.id || 0, acc)
-  }, 0) + 1
 
 const Provider: React.FC = ({ children }) => {
   const [state, dispatch] = useReducer(
@@ -123,6 +109,10 @@ const Provider: React.FC = ({ children }) => {
             }
           })
       }
+      return {
+        ...state,
+        collections: collectionsReducer(state.collections, action)
+      }
     },
     { ...defaultState }
   )
@@ -154,11 +144,21 @@ const Provider: React.FC = ({ children }) => {
     return state.keywords.find(c => c.id === id)
   }
 
+  const getCollection = (id: EntityID) => {
+    return state.collections.find(c => c.id === id)
+  }
+
+  const getCard = (id: EntityID) => {
+    return state.cards.find(c => c.id === id)
+  }
+
   const context = {
     state,
     dispatch,
     getKeyword,
-    getColor
+    getColor,
+    getCollection,
+    getCard
   }
 
   return (

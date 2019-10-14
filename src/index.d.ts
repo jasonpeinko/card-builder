@@ -8,6 +8,19 @@ type CardRarity = {
   id: EntityID
 }
 
+type CollectionCard = {
+  id: EntityID
+  count: number
+}
+type Collection = {
+  id: EntityID
+  color: string
+  name: string
+  cards: {
+    [n: number]: number
+  }
+}
+
 type CardAffix = {
   type: Affix
   text: string
@@ -25,11 +38,6 @@ type Card = {
   power: number
   toughness: number
   id: EntityID
-}
-
-type Collection = {
-  cards: CardID[]
-  name: string
 }
 
 type Color = {

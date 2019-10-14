@@ -99,7 +99,6 @@ const CardDialog: React.FC<Props> = ({
     setImageData('')
   }, [modal.data])
   const onSubmit = (values: Card) => {
-    console.log(values.image)
     storeImage(values.image, imageData)
     onSave(values)
   }
@@ -181,20 +180,16 @@ const CardDialog: React.FC<Props> = ({
                   selected={values.keywords.map(k => k.id.toString())}
                   error={getError('keywords')}
                   onChange={v => {
-                    console.log(v)
                     if (Array.isArray(v)) {
-                      console.log(v, values)
                       const ids = v.map(v => {
                         const existing = values.keywords.find(
                           kw => kw.id.toString() === v.value.toString()
                         )
-                        console.log('existing', existing)
                         if (existing) {
                           return existing
                         }
                         return { id: v.value, count: 1 }
                       })
-                      console.log(ids)
                       setValue('keywords', ids)
                     } else {
                       setValue('keywords', [])

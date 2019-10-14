@@ -38,7 +38,9 @@ const Cards: React.FC = () => {
       <h1>Cards</h1>
       <div className='card-list'>
         {cards.map((c: Card) => (
-          <Card modal={modal} card={c} key={c.id} />
+          <div className='card-wrap'>
+            <Card modal={modal} card={c} key={c.id} />
+          </div>
         ))}
       </div>
       <FAB.Group>

@@ -61,9 +61,6 @@ const wss = new WebSocket.Server({ port: 61111 })
 const isProjectFile = (p: string) => path.extname(p) === '.cb'
 
 const makeActionString = (action: SocketClientAction) => JSON.stringify(action)
-const writeProject = (path: string, data: any) => {
-  writeFileSync(path, data)
-}
 let clients: WebSocket[] = []
 let project: ProjectFile | null = null
 wss.on('connection', ws => {
@@ -101,14 +98,14 @@ wss.on('connection', ws => {
       }
       case 'load-image': {
         if (!project || project.path != action.project) {
-          project = loadProject(action.project)
+          project = await loadProject(action.project)
         }
-        const data = project.readImage(action.image)
+        const data = await project.readImage(action.image)
         if (data) {
           ws.send(
             makeActionString({
               type: 'image',
-              data: data.toString('base64'),
+              data: data,
               image: action.image
             })
           )
@@ -118,7 +115,7 @@ wss.on('connection', ws => {
       case 'store-image': {
         console.log('store')
         if (!project || project.path != action.project) {
-          project = loadProject(action.project)
+          project = await loadProject(action.project)
         }
         project.writeImage(action.image, Buffer.from(action.data, 'base64'))
         break
@@ -137,9 +134,9 @@ wss.on('connection', ws => {
           break
         }
         const file = filePaths[0]
-        project = loadProject(file)
+        project = await loadProject(file)
         project.listContents()
-        const data = project.readDataFile()
+        const data = await project.readDataFile()
         ws.send(
           makeActionString({ type: 'loaded', data, project: project.path })
         )
@@ -157,7 +154,7 @@ wss.on('connection', ws => {
         }
         const path = isProjectFile(file) ? file : `${file}.cb`
         const project = existsSync(path)
-          ? loadProject(path)
+          ? await loadProject(path)
           : createProject(path)
         project.writeDataFile(action.data)
         ws.send(makeActionString({ type: 'saved' }))

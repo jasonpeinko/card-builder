@@ -1,13 +1,14 @@
-import AdmZip from 'adm-zip'
+import JSZip from 'jszip'
 import yaml from 'yaml'
+import * as fs from 'fs'
 
 const DATA_FILE = 'data.yaml'
 
 type Project = {
-  zip: AdmZip
+  zip: JSZip
   path: string
 }
-export const wrapProject = (zip: AdmZip, path: string) => {
+export const wrapProject = (zip: JSZip, path: string) => {
   const project = {
     path,
     zip
@@ -25,18 +26,19 @@ export const wrapProject = (zip: AdmZip, path: string) => {
 export type ProjectFile = ReturnType<typeof wrapProject>
 
 export const createProject = (path: string) => {
-  const zip = new AdmZip()
-  zip.writeZip(path)
-  return wrapProject(new AdmZip(path), path)
+  const zip = new JSZip()
+  return wrapProject(zip, path)
 }
-export const loadProject = (path: string) => {
+export const loadProject = async (path: string) => {
   console.log('loading project', path)
-  const zip = new AdmZip(path)
+  const data = fs.readFileSync(path)
+  const zip = await JSZip.loadAsync(data)
   return wrapProject(zip, path)
 }
 
-const readDataFile = (project: Project) => () => {
-  const d = project.zip.readAsText(DATA_FILE)
+const readDataFile = (project: Project) => async () => {
+  const d = await project.zip.file(DATA_FILE).async('text')
+  console.log('load project file', d)
   if (!d) return null
   return yaml.parse(d)
 }
@@ -46,25 +48,25 @@ const writeDataFile = (project: Project) => (data: any) => {
   writeFile(project)(DATA_FILE, d)
 }
 const writeFile = (project: Project) => (name: string, d: string | Buffer) => {
-  const list = listContents(project)().map(c => c.entryName)
-  console.log('list', list)
-  const buff = Buffer.alloc(d.length, d)
-  if (list.includes(name)) {
-    project.zip.updateFile(name, buff)
-  } else {
-    project.zip.addFile(name, buff)
-  }
-  project.zip.writeZip(project.path)
+  listContents(project)
+  project.zip.file(name, d)
+  project.zip
+    .generateNodeStream({ type: 'nodebuffer', streamFiles: true })
+    .pipe(fs.createWriteStream(project.path))
+    .on('finish', function() {
+      console.log('project file saved', project.path)
+    })
 }
-const readImage = (project: Project) => (path: string) => {
+const readImage = (project: Project) => async (path: string) => {
   console.log('reading:', path)
   listContents(project)()
-  const d = project.zip.readFile(path)
-  if (!d) {
-    console.log('failed to read image: ', path)
+  try {
+    const d = await project.zip.file(path).async('base64')
+    return d
+  } catch (e) {
+    console.log('image not in project file', path)
     return null
   }
-  return d
 }
 const writeImage = (project: Project) => (
   path: string,
@@ -74,11 +76,5 @@ const writeImage = (project: Project) => (
   writeFile(project)(path, data)
 }
 const listContents = (project: Project) => () => {
-  console.log('project contents:')
-  const enteries = project.zip.getEntries()
-  if (enteries.length < 1) {
-    console.log('- [no contents')
-  }
-  enteries.map(e => console.log('- ' + e.name))
-  return enteries
+  console.log('project contents:', Object.keys(project.zip.files))
 }
