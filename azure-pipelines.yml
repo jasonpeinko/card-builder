@@ -26,11 +26,11 @@ steps:
       path: $(YARN_CACHE)
     displayName: Cache Yarn packages
 
-  # - task: CacheBeta@0
-  #   inputs:
-  #     key: electron | $(Agent.OS)
-  #     path: $(ELECTRON_CACHE)
-  #   displayName: Cache Electron
+  - task: CacheBeta@0
+    inputs:
+      key: electron | $(Agent.OS)
+      path: $(ELECTRON_CACHE)
+    displayName: Cache Electron
 
   - task: NodeTool@0
     inputs:
