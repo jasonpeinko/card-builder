@@ -3,12 +3,22 @@ import Icon from './icon'
 
 type Props = {
   icon: string
+  className?: string
   small?: boolean
   onClick: () => void
 }
-const FAB: React.FC<Props> = ({ children, small = false, icon, onClick }) => {
+const FAB: React.FC<Props> = ({
+  className = '',
+  children,
+  small = false,
+  icon,
+  onClick
+}) => {
   return (
-    <div className={`fab ${small ? 'small' : ''}`} onClick={onClick}>
+    <div
+      className={`fab ${small ? 'small' : ''} ${className}`}
+      onClick={onClick}
+    >
       <Icon icon={icon} size={small ? 20 : 48} />
       {children}
     </div>

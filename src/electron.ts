@@ -157,7 +157,7 @@ wss.on('connection', ws => {
           ? await loadProject(path)
           : createProject(path)
         project.writeDataFile(action.data)
-        ws.send(makeActionString({ type: 'saved' }))
+        ws.send(makeActionString({ type: 'saved', project: path }))
         break
       }
     }

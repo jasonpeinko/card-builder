@@ -136,10 +136,13 @@ html, body
   border-radius: 3px
   align-items: center
   justify-content: center
-  border-bottom: 3px solid darken($primary, 20%)
+  border-bottom: 5px solid darken($primary, 20%)
   cursor: pointer
   transition: background 0.2s, border-bottom 0.2s
   @include shadow
+  &.secondary
+    background: $secondary
+    border-bottom: 5px solid darken($secondary, 20%)
   &:hover
     background: darken($primary, 10%)
     border-bottom: 1px solid darken($primary, 15%)
@@ -523,3 +526,29 @@ form
 
 .collection
   padding: 0 20px
+
+.project-picker
+  display: flex
+  flex: 1
+  flex-direction: column
+  justify-content: center
+  align-items: center
+  .fab
+    width: auto
+    height: auto
+    padding: 0px 10px
+    margin: 0 20px
+    h2
+      margin-left: 10px
+  .branding
+    display: flex
+    flex-direction: column
+    align-items: center
+    p
+      color: darken($text, 60%)
+    h1
+      padding: 0
+      margin: 0
+  > div
+    display: flex
+    flex-direction: row

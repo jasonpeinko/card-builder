@@ -30,7 +30,7 @@ const defaultState: State = {
 }
 type Action =
   | { type: 'loaded'; state: State | null; project: string }
-  | { type: 'reset' }
+  | { type: 'reset'; project?: string }
   | { type: 'card.upsert'; card: Card }
   | { type: 'card.remove'; card: Card }
   | { type: 'color.upsert'; color: Color }
@@ -63,7 +63,14 @@ const Provider: React.FC = ({ children }) => {
     (state: State, action: Action): State => {
       switch (action.type) {
         case 'reset':
-          return { ...defaultState, loading: false }
+          return {
+            ...defaultState,
+            loading: false,
+            meta: {
+              ...defaultState.meta,
+              projectFile: action.project ? action.project : ''
+            }
+          }
         case 'keyword.upsert':
           return {
             ...state,

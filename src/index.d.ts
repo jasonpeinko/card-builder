@@ -81,7 +81,7 @@ type SocketServerAction =
   | { type: 'store-image'; image: string; data: string; project: string }
   | { type: 'load-image'; image: string; project: string }
 type SocketClientAction =
-  | { type: 'saved' }
+  | { type: 'saved'; project: string }
   | { type: 'loaded'; project: string; data: any }
   | { type: 'image'; image: string; data: string }
   | { type: 'paste-image'; data: string }

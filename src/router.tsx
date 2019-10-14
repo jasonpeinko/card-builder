@@ -3,6 +3,8 @@ import { useRoutes } from 'hookrouter'
 import Cards from './cards'
 import Constants from './constants'
 import Collection from './collection'
+import ProjectPicker from './project-picker'
+import { useAppContext } from './data/app'
 
 const routes = {
   '/': () => <Cards />,
