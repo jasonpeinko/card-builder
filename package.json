@@ -26,7 +26,7 @@
     "electron-is-dev": "^1.1.0",
     "hookrouter": "^1.2.3",
     "js-yaml": "^3.13.1",
-    "jszip": "^3.2.2",
+    "jszip": "^3.7.0",
     "lodash": "^4.17.15",
     "nanoid": "^2.1.2",
     "node-yaml": "^4.0.1",
